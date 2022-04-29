@@ -11,7 +11,7 @@ public interface AuthorService {
 
     Optional<Author> findById(Long id);
 
-    Optional<Author> save(String name, String surname, String country);
+    Optional<Author> save(String name, String country);
 
     void deleteById(Long id);
 }

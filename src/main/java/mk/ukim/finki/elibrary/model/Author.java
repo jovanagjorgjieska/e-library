@@ -17,16 +17,13 @@ public class Author {
 
     private String name;
 
-    private String surname;
-
     private String country;
 
     public Author() {
     }
 
-    public Author(String name, String surname, String country) {
+    public Author(String name, String country) {
         this.name = name;
-        this.surname = surname;
         this.country = country;
     }
 }

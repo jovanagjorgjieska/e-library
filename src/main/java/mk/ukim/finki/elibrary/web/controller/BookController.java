@@ -55,10 +55,10 @@ public class BookController {
             model.addAttribute("authors", authors);
             model.addAttribute("categories", categories);
             model.addAttribute("book", book);
-            model.addAttribute("bodyContent", "add-product");
+            model.addAttribute("bodyContent", "add-book");
             return "master-template";
         }
-        return "redirect:/books?error=ProductNotFound";
+        return "redirect:/books?error=BookNotFound";
     }
 
     @GetMapping("/add-form")
