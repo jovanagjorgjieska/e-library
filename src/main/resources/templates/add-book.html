@@ -1,0 +1,82 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">E-library</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/books/add" method="POST">
+                    <input id="id" type="hidden" name="id" th:value="(${book} != null ? ${book.getId()} : '')">
+                    <div class="form-group">
+                        <label for="title">Product title</label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               th:value="(${book} != null ? ${book.getTitle()} : '')"
+                               required
+                               placeholder="Enter book title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text"
+                               class="form-control"
+                               id="description"
+                               name="description"
+                               th:value="(${book} != null ? ${book.getDescription()} : '')"
+                               placeholder="Description">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="text"
+                               class="form-control"
+                               id="year"
+                               name="year"
+                               th:value="(${book} != null ? ${book.getYear()} : '')"
+                               placeholder="Year">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category" class="form-control">
+                            <option th:if="${book} != null"
+                                    th:selected="${book.getCategory() != null &&
+                                book.getCategory().getId() == cat.getId()}"
+                                    th:each="cat : ${categories}"
+                                    th:value="${cat.getId()}"
+                                    th:text="${cat.getName()}">
+                            </option>
+                            <option th:if="${book} == null"
+                                    th:each="cat : ${categories}"
+                                    th:value="${cat.getId()}"
+                                    th:text="${cat.getName()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Author</label>
+                        <select name="author" class="form-control">
+                            <option th:if="${book} != null"
+                                    th:selected="${book.getAuthor() != null && book.getAuthor().getId() == auth.getId()}"
+                                    th:each="auth : ${authors}"
+                                    th:value="${auth.getId()}"
+                                    th:text="${auth.getName()}">
+                            </option>
+                            <option th:if="${book} == null"
+                                    th:each="auth : ${authors}"
+                                    th:value="${auth.getId()}"
+                                    th:text="${auth.getName()}">
+                            </option>
+                        </select>
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/books">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
