@@ -17,8 +17,7 @@ public class Book {
 
     private String description;
 
-    @ManyToOne
-    private Author author;
+    private String author;
 
     private Integer year;
 
@@ -33,7 +32,7 @@ public class Book {
 
     }
 
-    public Book(String title, String description, Author author, Integer year, Category category) {
+    public Book(String title, String description, String author, Integer year, Category category) {
         this.title = title;
         this.description = description;
         this.author = author;

@@ -1,9 +1,7 @@
 package mk.ukim.finki.elibrary.web.controller;
 
-import mk.ukim.finki.elibrary.model.Author;
 import mk.ukim.finki.elibrary.model.Book;
 import mk.ukim.finki.elibrary.model.Category;
-import mk.ukim.finki.elibrary.service.AuthorService;
 import mk.ukim.finki.elibrary.service.BookService;
 import mk.ukim.finki.elibrary.service.CategoryService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -19,12 +16,10 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-    private final AuthorService authorService;
     private final CategoryService categoryService;
 
-    public BookController(BookService bookService, AuthorService authorService, CategoryService categoryService) {
+    public BookController(BookService bookService, CategoryService categoryService) {
         this.bookService = bookService;
-        this.authorService = authorService;
         this.categoryService = categoryService;
     }
 
@@ -50,9 +45,7 @@ public class BookController {
     public String editBookPage(@PathVariable Long id, Model model) {
         if (this.bookService.findById(id).isPresent()) {
             Book book = this.bookService.findById(id).get();
-            List<Author> authors = this.authorService.findAll();
             List<Category> categories = this.categoryService.findAll();
-            model.addAttribute("authors", authors);
             model.addAttribute("categories", categories);
             model.addAttribute("book", book);
             model.addAttribute("bodyContent", "add-book");
@@ -64,9 +57,7 @@ public class BookController {
     @GetMapping("/add-form")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addBookPage(Model model) {
-        List<Author> authors = this.authorService.findAll();
         List<Category> categories = this.categoryService.findAll();
-        model.addAttribute("authors", authors);
         model.addAttribute("categories", categories);
         model.addAttribute("bodyContent", "add-book");
         return "master-template";
@@ -77,7 +68,7 @@ public class BookController {
             @RequestParam(required = false) Long id,
             @RequestParam String title,
             @RequestParam String description,
-            @RequestParam Long author,
+            @RequestParam String author,
             @RequestParam Integer year,
             @RequestParam Long category) {
         if (id != null) {

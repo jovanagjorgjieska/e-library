@@ -14,15 +14,13 @@
                             ? ${book.getCategory().getName()} : 'No Category'" class="card-header"></div>
                     <div class="card-body">
                         <h5 th:text="${book.getTitle()}" class="card-title"></h5>
-                        <h6 th:text="${book.getAuthor() != null}
-                            ? ${book.getAuthor().getName()} : 'No Author'"
-                            class="card-subtitle mb-2 text-muted"></h6>
+                        <h6 th:text="${book.getAuthor()}" class="card-subtitle mb-2 text-muted"></h6>
                         <p th:text="${book.getDescription()}" class="card-text text-muted"></p>
                     </div>
 
                     <div class="card-footer">
                         <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                            <div class="btn-group text-right mb-0">
+                            <div class="btn-group text-left mb-0">
                                 <form th:action="@{'/books/delete/{id}' (id=${book.getId()})}"
                                       th:method="DELETE">
                                     <button type="submit"

@@ -17,8 +17,6 @@ public class Category {
 
     private String name;
 
-    private Integer numBooks=0;
-
     public Category() {
     }
 

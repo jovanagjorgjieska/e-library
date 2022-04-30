@@ -19,9 +19,7 @@
                             ? ${book.getCategory().getName()} : 'No Category'" class="card-header"></div>
                     <div class="card-body">
                         <h5 th:text="${book.getTitle()}" class="card-title"></h5>
-                        <h6 th:text="${book.getAuthor() != null}
-                            ? ${book.getAuthor().getName()} : 'No Author'"
-                            class="card-subtitle mb-2 text-muted"></h6>
+                        <h6 th:text="${book.getAuthor()}" class="card-subtitle mb-2 text-muted"></h6>
                         <p th:text="${book.getDescription()}" class="card-text text-muted"></p>
                     </div>
 

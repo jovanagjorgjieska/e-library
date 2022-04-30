@@ -1,12 +1,9 @@
 package mk.ukim.finki.elibrary.service.impl;
 
-import mk.ukim.finki.elibrary.model.Author;
 import mk.ukim.finki.elibrary.model.Book;
 import mk.ukim.finki.elibrary.model.Category;
-import mk.ukim.finki.elibrary.model.exceptions.AuthorNotFoundException;
 import mk.ukim.finki.elibrary.model.exceptions.BookNotFoundException;
 import mk.ukim.finki.elibrary.model.exceptions.CategoryNotFoundException;
-import mk.ukim.finki.elibrary.repository.AuthorRepository;
 import mk.ukim.finki.elibrary.repository.BookRepository;
 import mk.ukim.finki.elibrary.repository.CategoryRepository;
 import mk.ukim.finki.elibrary.service.BookService;
@@ -19,12 +16,10 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
-    private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, CategoryRepository categoryRepository) {
+    public BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
         this.categoryRepository = categoryRepository;
     }
 
@@ -44,8 +39,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> save(String title, String description, Long authorId, Integer year, Long categoryId) {
-        Author author = this.authorRepository.findById(authorId).orElseThrow(() -> new AuthorNotFoundException(authorId));
+    public Optional<Book> save(String title, String description, String author, Integer year, Long categoryId) {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException(categoryId));
         Book book = new Book(title, description, author, year, category);
         this.bookRepository.save(book);
@@ -53,9 +47,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> edit(Long id, String title, String description, Long authorId, Integer year, Long categoryId) {
+    public Optional<Book> edit(Long id, String title, String description, String author, Integer year, Long categoryId) {
         Book book = this.bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-        Author author = this.authorRepository.findById(authorId).orElseThrow(() -> new AuthorNotFoundException(authorId));
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException(categoryId));
         book.setTitle(title);
         book.setDescription(description);
@@ -79,8 +72,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> filterByAuthorAndCategory(Long authorId, Category category) {
-        Author author = authorId != null ? this.authorRepository.findById(authorId).orElse((Author) null) : null;
+    public List<Book> filterByAuthorAndCategory(String author, Category category) {
         if(author!=null && category!=null)
             return this.bookRepository.findAllByCategoryAndAuthor(category, author);
         else if(author!=null)
