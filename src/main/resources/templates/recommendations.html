@@ -1,0 +1,46 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">E-library</h1>
+            <h3 class="jumbotron-heading">All recommendations</h3>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="container" th:if="${recommendations.size() > 0}">
+            <div th:each="recommendation : ${recommendations}" class="row">
+                <div class="col-2 border-right text-center">
+                    <i><strong>User:</strong></i>
+                    <div th:text="${recommendation.getUser() != null}
+                            ? ${recommendation.getUser().getName()} : 'No User'"></div>
+                </div>
+                <div class="col-8 text-center">
+                    <div th:text="${recommendation.getTitle()}" class="strong"></div>
+                    <div th:text="${recommendation.getText()}" class="text-muted"></div>
+                </div>
+                <div class="col-2 text-right">
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form th:action="@{'/recommendations/delete/{id}' (id=${recommendation.getId()})}"
+                              th:method="DELETE">
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger delete-product">
+                                <i class="fa fa-trash">Delete</i>
+                            </button>
+                        </form>
+                    </th:block>
+                </div>
+            </div>
+            <hr class="bg-secondary mb-2 mt-0 d-inline-block mx-auto w-100">
+        </div>
+
+        <div class="col mb-3 mt-3">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <a href="/recommendations/add-recommendation" class="btn btn-block btn-dark add-product-btn">
+                        Add new recommendation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

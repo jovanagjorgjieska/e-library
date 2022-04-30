@@ -1,5 +1,6 @@
 package mk.ukim.finki.elibrary.web.controller;
 
+import mk.ukim.finki.elibrary.model.Book;
 import mk.ukim.finki.elibrary.model.Shelf;
 import mk.ukim.finki.elibrary.model.User;
 import mk.ukim.finki.elibrary.service.ShelfService;
@@ -44,5 +45,12 @@ public class ShelfController {
         } catch (RuntimeException exception) {
             return "redirect:/shelf?error=" + exception.getMessage();
         }
+    }
+
+    @PostMapping("/return-book/{id}")
+    public String returnBook(@PathVariable Long id, HttpServletRequest req, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        this.shelfService.returnBook(user.getUsername(), id);
+        return "redirect:/shelf";
     }
 }

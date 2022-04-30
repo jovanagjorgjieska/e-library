@@ -1,0 +1,40 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">E-library</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/recommendations/add-recommendation" method="POST">
+                    <input id="id" type="hidden" name="id" th:value="(${recommendation} != null ? ${recommendation.getId()} : '')">
+                    <div class="form-group">
+                        <label for="title">Recommendation title</label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               th:value="(${recommendation} != null ? ${recommendation.getTitle()} : '')"
+                               required
+                               placeholder="Enter recommendation title">
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Text</label>
+                        <input type="text"
+                               class="form-control"
+                               id="text"
+                               name="text"
+                               th:value="(${recommendation} != null ? ${recommendation.getText()} : '')"
+                               placeholder="Recommendation text">
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/books">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>

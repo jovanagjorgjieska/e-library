@@ -11,4 +11,6 @@ public interface ShelfService {
     Shelf getActiveShelf(String username);
 
     Shelf addBookToShelf(String username, Long bookId);
+
+    Shelf returnBook(String username, Long bookId);
 }

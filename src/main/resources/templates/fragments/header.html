@@ -15,6 +15,9 @@
                     <li class="nav-item m-auto">
                         <a class="nav-link active" href="/books">Books</a>
                     </li>
+                    <li class="nav-item m-auto" sec:authorize="isAuthenticated()">
+                        <a class="nav-link active" href="/recommendations">Recommendations</a>
+                    </li>
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" sec:authorize="isAuthenticated()">

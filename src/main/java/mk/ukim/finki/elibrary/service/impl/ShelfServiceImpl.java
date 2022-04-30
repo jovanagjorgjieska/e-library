@@ -58,4 +58,13 @@ public class ShelfServiceImpl implements ShelfService {
         shelf.getBooks().add(book);
         return this.shelfRepository.save(shelf);
     }
+
+    @Override
+    public Shelf returnBook(String username, Long bookId) {
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+        Shelf shelf = this.shelfRepository.findByUser(user).orElseThrow(() -> new ShelfNotFoundException());
+        Book book = this.bookService.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
+        shelf.getBooks().remove(book);
+        return this.shelfRepository.save(shelf);
+    }
 }
